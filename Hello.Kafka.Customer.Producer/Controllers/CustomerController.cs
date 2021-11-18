@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Hello.Kafka.Customer.Producer.Controllers
 {
+    [Controller]
+    [Route("/[controller]/[action]")]
     public class CustomerController : Controller
     {
 
@@ -18,12 +20,13 @@ namespace Hello.Kafka.Customer.Producer.Controllers
             _customerService = customerService;
         }
 
-        [HttpPost]
-        public ActionResult Customer(CustomerModel customer)
-        {
-            this._customerService.CreateCustomer(customer);
 
-            return Ok();
+        [HttpPost]
+        public IActionResult Create(CustomerModel customer)
+        {
+            var result = this._customerService.CreateCustomer(customer);
+
+            return Ok("Customer created successfully.");
         }
     }
 }

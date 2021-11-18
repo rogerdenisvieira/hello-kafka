@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Hello.Kafka.Infrastructure.Service
 {
@@ -16,7 +17,10 @@ namespace Hello.Kafka.Infrastructure.Service
 
         public bool CreateCustomer(CustomerModel customer)
         {
-            base.ProduceAsync("customer", customer);
+            var result = Produce("customer", customer);
+
+            return result;
+
         }
     }
 }

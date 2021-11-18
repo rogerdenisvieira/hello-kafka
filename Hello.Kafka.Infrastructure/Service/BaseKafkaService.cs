@@ -3,8 +3,9 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using System.Web.Helpers;
+
 
 namespace Hello.Kafka.Infrastructure.Service
 {
@@ -17,7 +18,7 @@ namespace Hello.Kafka.Infrastructure.Service
         {
             this._configuration = configuration;
 
-            var bootstrapServer = this._configuration.GetSection("Kafka:bootstrapServer").Value;
+            var bootstrapServer = this._configuration.GetSection("Kafka:bootstrapServers").Value;
 
             var producerConfig = new ProducerConfig()
             {
@@ -28,19 +29,21 @@ namespace Hello.Kafka.Infrastructure.Service
 
         }
 
-        public bool ProduceAsync(string topic, object content)
+        public bool Produce(string topic, object content)
         {
 
-            Message<Null, string> message = new Message<Null, string>()
+            Message<Null, string> message = new()
             {
-                Value = Json.Encode(content)
+                //Value = Json.Encode(content)
+                Value = JsonSerializer.Serialize(content)
+                
             };
 
             try
             {
-               var result = this._producer.ProduceAsync(topic, message);
+               _producer.Produce(topic, message);
 
-                return result != null;
+                return true;
 
             }
             catch (Exception)

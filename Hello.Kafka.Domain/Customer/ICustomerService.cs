@@ -6,6 +6,6 @@ namespace Hello.Kafka.Domain.Customer
 {
     public interface ICustomerService
     {
-        bool CreateCustomer(CustomerModel customer);
+       bool CreateCustomer(CustomerModel customer);
     }
 }
