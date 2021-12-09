@@ -14,8 +14,9 @@ namespace Hello.Kafka.Domain.Customer
         private DateTime _customerSince;
 
 
-        public DateTime CustomerSince {
-            get { return _customerSince != null ? _customerSince : DateTime.Now; }
+        public DateTime CustomerSince
+        {
+            get => _customerSince != null ? _customerSince : DateTime.Now;
             set { _customerSince = value; }
         }
     }
